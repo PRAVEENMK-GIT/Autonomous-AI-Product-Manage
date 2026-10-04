@@ -123,3 +123,4 @@ python -m genai.eval
 - Input validation: document text capped at 10,000 characters.
 - Prompt injection protection: inputs wrapped in delimiters and tagged as `DATA ONLY`.
 - MongoDB Atlas connection falls back to safe in-memory mock when unconfigured.
+# Autonomous-AI-Product-Manage
