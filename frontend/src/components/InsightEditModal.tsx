@@ -62,34 +62,40 @@ export const InsightEditModal: React.FC<InsightEditModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div className="bg-[#FFFDF5] border-[3px] border-black rounded-2xl w-full max-w-xl overflow-hidden shadow-[10px_10px_0px_0px_#000000] text-black animate-in fade-in zoom-in-95 duration-150">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 bg-[#FFE600] border-b-[3px] border-black">
           <div>
-            <h3 className="text-base font-bold text-white">Edit AI Insight</h3>
-            <p className="text-xs text-slate-400">
-              Human review & override (sets status to <span className="text-indigo-400 font-semibold">Edited</span>)
+            <h3 className="text-lg font-black uppercase tracking-tight text-black">
+              Edit AI Insight (Human Review)
+            </h3>
+            <p className="text-xs font-bold text-neutral-800">
+              Manual correction will mark this insight as{" "}
+              <span className="bg-black text-[#55E6A5] px-1.5 py-0.5 rounded font-black text-[10px]">
+                HUMAN EDITED
+              </span>
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="neo-btn bg-white text-black p-1.5 hover:bg-neutral-100"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 stroke-[2.5]" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
           {error && (
-            <div className="p-3 bg-rose-950/50 border border-rose-800 rounded-xl text-xs text-rose-300 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
+            <div className="p-3 bg-[#FF6B6B] border-2 border-black rounded-xl text-xs font-bold text-black flex items-center gap-2 shadow-[3px_3px_0px_0px_#000000]">
+              <AlertCircle className="w-5 h-5 stroke-[2.5] flex-shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Sentiment
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-2">
+              Sentiment Classification
             </label>
             <div className="grid grid-cols-4 gap-2">
               {(["positive", "negative", "neutral", "mixed"] as Sentiment[]).map((s) => (
@@ -97,10 +103,16 @@ export const InsightEditModal: React.FC<InsightEditModalProps> = ({
                   type="button"
                   key={s}
                   onClick={() => setSentiment(s)}
-                  className={`py-2 px-3 rounded-lg text-xs font-bold capitalize border transition cursor-pointer ${
+                  className={`neo-btn py-2 px-3 text-xs font-black capitalize border-2 border-black ${
                     sentiment === s
-                      ? "bg-indigo-600 text-white border-indigo-500"
-                      : "bg-slate-950 text-slate-400 border-slate-800 hover:text-white"
+                      ? s === "positive"
+                        ? "bg-[#55E6A5] text-black shadow-[4px_4px_0px_0px_#000000]"
+                        : s === "negative"
+                        ? "bg-[#FF6B6B] text-black shadow-[4px_4px_0px_0px_#000000]"
+                        : s === "neutral"
+                        ? "bg-[#70D6FF] text-black shadow-[4px_4px_0px_0px_#000000]"
+                        : "bg-[#FFD166] text-black shadow-[4px_4px_0px_0px_#000000]"
+                      : "bg-white text-neutral-600 shadow-[2px_2px_0px_0px_#000000] hover:text-black"
                   }`}
                 >
                   {s}
@@ -110,70 +122,70 @@ export const InsightEditModal: React.FC<InsightEditModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Themes (Comma separated, normalized lowercase)
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5">
+              Themes (Comma separated, lowercase)
             </label>
             <input
               type="text"
               value={themesStr}
               onChange={(e) => setThemesStr(e.target.value)}
-              placeholder="search speed, pricing, export options"
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+              placeholder="e.g. search speed, pricing, export options"
+              className="neo-input"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Summary (1-2 sentences)
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5">
+              Executive Summary (1-2 sentences)
             </label>
             <textarea
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               rows={2}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 resize-none"
+              className="neo-input resize-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Pain Points (One per line)
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5">
+              Pain Points (One friction point per line)
             </label>
             <textarea
               value={painPointsStr}
               onChange={(e) => setPainPointsStr(e.target.value)}
               rows={3}
-              placeholder="Slow query indexing..."
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 resize-none"
+              placeholder="e.g. Slow query indexing..."
+              className="neo-input resize-none font-mono text-xs"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Feature Requests (One per line)
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5">
+              Feature Requests (One request per line)
             </label>
             <textarea
               value={featureRequestsStr}
               onChange={(e) => setFeatureRequestsStr(e.target.value)}
               rows={3}
-              placeholder="Add CSV export option..."
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 resize-none"
+              placeholder="e.g. Add CSV export option..."
+              className="neo-input resize-none font-mono text-xs"
             />
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end space-x-3 pt-4 border-t-2 border-black">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition cursor-pointer"
+              className="neo-btn bg-white text-black px-4 py-2.5 text-xs uppercase tracking-wider"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSaving}
-              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold shadow-md shadow-indigo-600/30 transition disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
+              className="neo-btn bg-[#55E6A5] text-black px-5 py-2.5 text-xs uppercase tracking-wider hover:bg-[#40D695]"
             >
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-4 h-4 mr-1.5 stroke-[2.5]" />
               <span>{isSaving ? "Saving..." : "Save Overrides"}</span>
             </button>
           </div>

@@ -13,6 +13,7 @@ import { InsightsTab } from "./pages/InsightsTab";
 import { ReportsTab } from "./pages/ReportsTab";
 import { ThemesTab } from "./pages/ThemesTab";
 import { UploadTab } from "./pages/UploadTab";
+import { HowToUseTab } from "./pages/HowToUseTab";
 import type { DocStatus, Insight, Report, ReportStatus, Sentiment, SourceType } from "./types";
 
 const queryClient = new QueryClient({
@@ -26,7 +27,8 @@ const queryClient = new QueryClient({
 
 export const AppContent: React.FC = () => {
   const qc = useQueryClient();
-  const [activeTab, setActiveTab] = useState<string>("upload");
+  const [activeTab, setActiveTab] = useState<string>("guide");
+  const [examplePreload, setExamplePreload] = useState<{ text: string; sourceType: SourceType } | null>(null);
 
   // Filtering states
   const [docStatusFilter, setDocStatusFilter] = useState<DocStatus | "all">("all");
@@ -198,8 +200,14 @@ export const AppContent: React.FC = () => {
     }
   };
 
+  const handleTryExample = (text: string, sourceType: SourceType) => {
+    setExamplePreload({ text, sourceType });
+    setActiveTab("upload");
+    showToast("Example loaded into Upload form! Click 'Submit & Analyze' to test.");
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen text-black flex flex-col font-sans">
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -210,6 +218,15 @@ export const AppContent: React.FC = () => {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {activeTab === "guide" && (
+          <HowToUseTab
+            onNavigateToTab={(tabId) => setActiveTab(tabId)}
+            onLoadSampleData={() => loadSampleMutation.mutate()}
+            onTryExample={handleTryExample}
+            isImportingSample={loadSampleMutation.isPending}
+          />
+        )}
+
         {activeTab === "upload" && (
           <UploadTab
             onUploadSuccess={() => {
@@ -219,6 +236,8 @@ export const AppContent: React.FC = () => {
             }}
             onLoadSample={() => loadSampleMutation.mutate()}
             isImportingSample={loadSampleMutation.isPending}
+            initialText={examplePreload?.text}
+            initialSourceType={examplePreload?.sourceType}
           />
         )}
 
@@ -277,13 +296,28 @@ export const AppContent: React.FC = () => {
         )}
       </main>
 
+      {/* Footer */}
+      <footer className="border-t-2 border-black bg-white py-4 mt-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-bold text-neutral-700">
+          <div className="flex items-center gap-2">
+            <span className="neo-badge bg-[#FFE600] text-black text-[10px] py-0.5 px-2">
+              Objective 1
+            </span>
+            <span>Discovery & Research Intelligence Engine</span>
+          </div>
+          <span className="font-mono text-[11px] text-neutral-500">
+            ECC Autonomous Loop • Neobrutalism UI
+          </span>
+        </div>
+      </footer>
+
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom duration-300">
+        <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom duration-200">
           <div
-            className={`px-4 py-3 rounded-xl shadow-2xl text-xs font-semibold border flex items-center gap-2 ${
+            className={`px-4 py-3 rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000000] text-xs font-black uppercase tracking-wider flex items-center gap-2 ${
               toastMessage.type === "success"
-                ? "bg-slate-900 text-emerald-400 border-emerald-800/80 shadow-emerald-950/50"
-                : "bg-slate-900 text-rose-400 border-rose-800/80 shadow-rose-950/50"
+                ? "bg-[#55E6A5] text-black"
+                : "bg-[#FF6B6B] text-black"
             }`}
           >
             <span>{toastMessage.text}</span>

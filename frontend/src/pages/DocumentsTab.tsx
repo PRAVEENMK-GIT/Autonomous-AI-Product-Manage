@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import {
   Play,
-  RotateCw,
   Search,
-  AlertTriangle,
   Sparkles,
   Database,
+  FileText,
 } from "lucide-react";
 import { StatusChip } from "../components/StatusChip";
 import type { DocStatus, RawDocument, SourceType } from "../types";
@@ -53,162 +52,185 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({
   });
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto py-6">
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-6 max-w-7xl mx-auto py-4">
+      {/* Header Banner */}
+      <div className="neo-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <span>Raw Ingestion Ledger</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-normal">
-              {totalDocs} Total
-            </span>
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Processed: <span className="text-emerald-400 font-semibold">{processedCount}</span> | Pending:{" "}
-            <span className="text-amber-400 font-semibold">{pendingCount}</span>
-          </p>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#FFE600] border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_0px_#000000]">
+              <FileText className="w-5 h-5 stroke-[2.5] text-black" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
+                  Raw Ingestion Ledger
+                </h2>
+                <span className="neo-badge bg-[#C4B5FD] text-black text-[11px]">
+                  {totalDocs} TOTAL
+                </span>
+              </div>
+              <div className="flex items-center gap-3 mt-1 text-xs font-bold text-neutral-800">
+                <span>
+                  PROCESSED:{" "}
+                  <span className="px-1.5 py-0.5 bg-[#55E6A5] border border-black rounded text-black font-black">
+                    {processedCount}
+                  </span>
+                </span>
+                <span>•</span>
+                <span>
+                  PENDING QUEUE:{" "}
+                  <span className="px-1.5 py-0.5 bg-[#FFE600] border border-black rounded text-black font-black">
+                    {pendingCount}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={onAnalyzeAllPending}
             disabled={pendingCount === 0 || isAnalyzingAll}
-            className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs font-semibold shadow-lg shadow-indigo-600/30 transition disabled:opacity-40 flex items-center gap-2 cursor-pointer"
+            className="neo-btn bg-[#FFE600] text-black px-5 py-3 text-xs uppercase tracking-wider hover:bg-[#FFD600] shadow-[4px_4px_0px_0px_#000000]"
           >
-            <Sparkles className={`w-3.5 h-3.5 ${isAnalyzingAll ? "animate-spin" : ""}`} />
+            <Sparkles className={`w-4 h-4 mr-2 stroke-[2.5] ${isAnalyzingAll ? "animate-spin" : ""}`} />
             <span>
               {isAnalyzingAll
-                ? "Analyzing Queue (Max 3 concurrent)..."
+                ? "Analyzing Queue (Max 3 Concurrency)..."
                 : `Analyze All Pending (${pendingCount})`}
             </span>
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-900/60 p-4 border border-slate-800/80 rounded-2xl">
+      {/* Filter and Search Bar */}
+      <div className="neo-card-sm p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-black absolute left-3.5 top-1/2 -translate-y-1/2 stroke-[2.5]" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search documents by text or reference ID..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            placeholder="Search documents by text or external reference..."
+            className="neo-input pl-10 py-2 text-xs"
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="neo-select"
           >
-            <option value="all">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="processing">Processing</option>
-            <option value="processed">Processed</option>
-            <option value="failed">Failed</option>
+            <option value="all">ALL STATUSES</option>
+            <option value="pending">PENDING</option>
+            <option value="processing">PROCESSING</option>
+            <option value="processed">PROCESSED</option>
+            <option value="failed">FAILED</option>
           </select>
 
           <select
             value={sourceFilter}
             onChange={(e) => setSourceFilter(e.target.value as any)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="neo-select"
           >
-            <option value="all">All Sources</option>
-            <option value="feedback">Feedback</option>
-            <option value="survey">Survey</option>
-            <option value="competitor">Competitor</option>
+            <option value="all">ALL SOURCES</option>
+            <option value="feedback">FEEDBACK</option>
+            <option value="survey">SURVEY</option>
+            <option value="competitor">COMPETITOR</option>
           </select>
         </div>
       </div>
 
-      <div className="bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      {/* Documents Table */}
+      <div className="neo-card overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="p-12 text-center">
-            <Database className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-slate-200">No documents found</h3>
-            <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-              Get started by importing sample customer feedback, surveys, or competitor notes.
-            </p>
+          <div className="p-12 text-center space-y-4">
+            <div className="w-16 h-16 rounded-2xl bg-[#FFE600] border-2 border-black flex items-center justify-center mx-auto shadow-[4px_4px_0px_0px_#000000]">
+              <Database className="w-8 h-8 stroke-[2.5] text-black" />
+            </div>
+            <div>
+              <h3 className="text-lg font-black uppercase text-black">No documents found</h3>
+              <p className="text-xs font-bold text-neutral-600 mt-1">
+                Upload some raw data or load sample fixtures to get started.
+              </p>
+            </div>
             <button
               onClick={onLoadSample}
-              className="mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition cursor-pointer shadow-md shadow-indigo-600/20"
+              className="neo-btn bg-[#FFE600] text-black px-5 py-2.5 text-xs uppercase tracking-wider"
             >
-              Load Sample Data
+              Load Demo Fixtures
             </button>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs uppercase tracking-wider font-semibold">
-                  <th className="py-3.5 px-4">Source & Ref</th>
-                  <th className="py-3.5 px-4">Raw Content</th>
-                  <th className="py-3.5 px-4 text-center">Rating</th>
-                  <th className="py-3.5 px-4">Status</th>
-                  <th className="py-3.5 px-4 text-right">Actions</th>
+            <table className="w-full text-left text-xs font-sans">
+              <thead className="bg-[#FFE600] border-b-[3px] border-black text-black font-black uppercase tracking-wider text-[11px]">
+                <tr>
+                  <th className="py-3.5 px-4 border-r-2 border-black">Source</th>
+                  <th className="py-3.5 px-4 border-r-2 border-black w-2/5">Raw Content</th>
+                  <th className="py-3.5 px-4 border-r-2 border-black">Reference / Rating</th>
+                  <th className="py-3.5 px-4 border-r-2 border-black">Status</th>
+                  <th className="py-3.5 px-4 border-r-2 border-black">Ingested At</th>
+                  <th className="py-3.5 px-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-xs">
+              <tbody className="divide-y-2 divide-black bg-white font-medium text-black">
                 {filtered.map((doc) => {
-                  const isBusy = analyzingIds.has(doc.id) || doc.status === "processing";
+                  const isAnalyzing = analyzingIds.has(doc.id);
                   return (
-                    <tr key={doc.id} className="hover:bg-slate-800/40 transition">
-                      <td className="py-3.5 px-4 whitespace-nowrap">
-                        <span className="capitalize font-semibold text-slate-200 block">
+                    <tr
+                      key={doc.id}
+                      className="hover:bg-[#FFFDE6] transition-colors"
+                    >
+                      <td className="py-3.5 px-4 border-r-2 border-black whitespace-nowrap">
+                        <span className="neo-badge bg-[#C4B5FD] text-black text-[10px]">
                           {doc.sourceType}
                         </span>
-                        <span className="text-slate-500 font-mono text-[10px]">
-                          {doc.externalRef || doc.id.slice(-6)}
-                        </span>
                       </td>
-
-                      <td className="py-3.5 px-4 max-w-md">
-                        <p className="text-slate-300 line-clamp-2 leading-relaxed">
-                          {doc.text}
-                        </p>
-                        {doc.errorMessage && (
-                          <p className="text-rose-400 text-[11px] mt-1 flex items-center gap-1">
-                            <AlertTriangle className="w-3 h-3 flex-shrink-0" />
-                            <span>{doc.errorMessage}</span>
-                          </p>
-                        )}
-                      </td>
-
-                      <td className="py-3.5 px-4 text-center">
-                        {doc.rating !== null && doc.rating !== undefined ? (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800 text-[11px] font-bold">
-                            {doc.rating} ★
+                      <td className="py-3.5 px-4 border-r-2 border-black font-medium text-neutral-900 leading-relaxed">
+                        <div className="line-clamp-2">{doc.text}</div>
+                        {doc.isDuplicate && (
+                          <span className="inline-block mt-1 neo-badge bg-[#FF6B6B] text-black text-[9px] py-0 px-1.5">
+                            DUPLICATE HASH
                           </span>
-                        ) : (
-                          <span className="text-slate-600">—</span>
                         )}
                       </td>
-
-                      <td className="py-3.5 px-4 whitespace-nowrap">
+                      <td className="py-3.5 px-4 border-r-2 border-black whitespace-nowrap font-mono">
+                        {doc.externalRef ? (
+                          <span className="font-bold">{doc.externalRef}</span>
+                        ) : doc.rating !== null && doc.rating !== undefined ? (
+                          <span className="font-bold text-amber-800">{doc.rating} ★</span>
+                        ) : (
+                          <span className="text-neutral-400">—</span>
+                        )}
+                      </td>
+                      <td className="py-3.5 px-4 border-r-2 border-black whitespace-nowrap">
                         <StatusChip status={doc.status} />
                       </td>
-
-                      <td className="py-3.5 px-4 text-right whitespace-nowrap">
-                        {doc.status !== "processed" ? (
+                      <td className="py-3.5 px-4 border-r-2 border-black whitespace-nowrap font-mono text-[11px] text-neutral-700">
+                        {new Date(doc.createdAt).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </td>
+                      <td className="py-3.5 px-4 whitespace-nowrap text-right">
+                        {doc.status === "pending" || doc.status === "failed" ? (
                           <button
                             onClick={() => onAnalyzeDocument(doc.id)}
-                            disabled={isBusy}
-                            className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 rounded-lg text-xs font-semibold transition disabled:opacity-50 cursor-pointer"
+                            disabled={isAnalyzing}
+                            className="neo-btn bg-[#55E6A5] text-black px-3.5 py-1.5 text-[11px] uppercase tracking-wider hover:bg-[#40D695]"
                           >
-                            <Play className="w-3 h-3" />
-                            <span>{isBusy ? "Running..." : "Analyze"}</span>
+                            <Play className={`w-3 h-3 mr-1 stroke-[3] ${isAnalyzing ? "animate-spin" : ""}`} />
+                            <span>{isAnalyzing ? "Analyzing..." : "Analyze"}</span>
                           </button>
+                        ) : doc.status === "processing" ? (
+                          <span className="font-mono text-neutral-500 font-bold animate-pulse">Running...</span>
                         ) : (
-                          <button
-                            onClick={() => onAnalyzeDocument(doc.id)}
-                            disabled={isBusy}
-                            className="inline-flex items-center space-x-1 px-2.5 py-1 text-slate-400 hover:text-slate-200 transition text-xs cursor-pointer"
-                            title="Re-analyze document"
-                          >
-                            <RotateCw className="w-3 h-3" />
-                            <span>Re-run</span>
-                          </button>
+                          <span className="neo-badge bg-[#55E6A5] text-black text-[10px] py-0.5 px-2">
+                            Done
+                          </span>
                         )}
                       </td>
                     </tr>

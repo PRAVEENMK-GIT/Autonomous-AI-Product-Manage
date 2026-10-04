@@ -1,23 +1,136 @@
 @import "tailwindcss";
 
 @layer base {
+  * {
+    border-color: #000000;
+  }
+
   body {
-    @apply bg-slate-950 text-slate-100 antialiased font-sans min-h-screen selection:bg-indigo-500 selection:text-white;
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    background-color: #FBF8EF;
+    color: #121212;
+    background-image: radial-gradient(#d8d2c4 1.2px, transparent 1.2px);
+    background-size: 24px 24px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
-/* Custom subtle scrollbar */
+/* Neobrutalism Core Classes */
+.neo-card {
+  background-color: #FFFFFF;
+  border: 3px solid #000000;
+  border-radius: 16px;
+  box-shadow: 5px 5px 0px 0px #000000;
+  color: #000000;
+}
+
+.neo-card-sm {
+  background-color: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  box-shadow: 3px 3px 0px 0px #000000;
+  color: #000000;
+}
+
+.neo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  box-shadow: 3px 3px 0px 0px #000000;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.neo-btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+.neo-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px #000000;
+}
+
+.neo-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-weight: 800;
+  font-size: 0.75rem;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0px 0px #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.neo-input {
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #000000;
+  box-shadow: 2px 2px 0px 0px #000000;
+  transition: all 0.15s ease;
+}
+
+.neo-input:focus {
+  outline: none;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transform: translate(-1px, -1px);
+}
+
+.neo-select {
+  background-color: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: #000000;
+  box-shadow: 3px 3px 0px 0px #000000;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.neo-select:focus {
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+/* High-contrast Neobrutalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #FBF8EF;
+  border-left: 2px solid #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 3px;
+  background: #FFE600;
+  border: 2px solid #000000;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #FFD600;
 }

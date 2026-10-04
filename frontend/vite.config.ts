@@ -9,7 +9,9 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
+    host: '0.0.0.0',
     port: 5173,
+    allowedHosts: true,
     proxy: {
       '/health': 'http://127.0.0.1:8000',
       '/documents': 'http://127.0.0.1:8000',

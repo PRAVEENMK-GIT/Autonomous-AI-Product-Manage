@@ -6,7 +6,7 @@ import {
   Lightbulb,
   Building2,
   Edit3,
-  Tag,
+  XCircle,
 } from "lucide-react";
 import { InsightEditModal } from "../components/InsightEditModal";
 import { SentimentBadge } from "../components/SentimentBadge";
@@ -44,188 +44,204 @@ export const InsightsTab: React.FC<InsightsTabProps> = ({
     selectedTheme !== "" || selectedSentiment !== "all" || selectedSource !== "all";
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto py-6">
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-6 max-w-7xl mx-auto py-4">
+      {/* Header Banner */}
+      <div className="neo-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-indigo-400" />
-            <span>Structured Insights Explorer</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-normal">
-              {totalInsights} Processed
-            </span>
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Browse LLM-extracted sentiments, normalized themes, friction points, and competitor signals.
-            Every insight can be inspected, corrected, and verified by a human PM.
-          </p>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#55E6A5] border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_0px_#000000]">
+              <Sparkles className="w-5 h-5 stroke-[2.5] text-black" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
+                  Structured Insights Explorer
+                </h2>
+                <span className="neo-badge bg-[#55E6A5] text-black text-[11px]">
+                  {totalInsights} Processed
+                </span>
+              </div>
+              <p className="text-xs font-bold text-neutral-700 mt-1">
+                Browse AI-extracted sentiments, normalized themes, friction points, and competitor signals.
+                Every insight is human-reviewable with immutable version tracking.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      {/* Filter Ribbon */}
+      <div className="neo-card-sm p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-black absolute left-3.5 top-1/2 -translate-y-1/2 stroke-[2.5]" />
           <input
             type="text"
             value={selectedTheme}
             onChange={(e) => setSelectedTheme(e.target.value)}
-            placeholder="Filter by theme (e.g. search speed, pricing, onboarding)..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            placeholder="Filter by theme (e.g. search speed, pricing, export)..."
+            className="neo-input pl-10 py-2 text-xs"
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <select
             value={selectedSentiment}
             onChange={(e) => setSelectedSentiment(e.target.value as any)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="neo-select"
           >
-            <option value="all">All Sentiments</option>
-            <option value="positive">Positive</option>
-            <option value="negative">Negative</option>
-            <option value="neutral">Neutral</option>
-            <option value="mixed">Mixed</option>
+            <option value="all">ALL SENTIMENTS</option>
+            <option value="positive">POSITIVE</option>
+            <option value="negative">NEGATIVE</option>
+            <option value="neutral">NEUTRAL</option>
+            <option value="mixed">MIXED</option>
           </select>
 
           <select
             value={selectedSource}
             onChange={(e) => setSelectedSource(e.target.value as any)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="neo-select"
           >
-            <option value="all">All Sources</option>
-            <option value="feedback">Feedback</option>
-            <option value="survey">Survey</option>
-            <option value="competitor">Competitor</option>
+            <option value="all">ALL SOURCES</option>
+            <option value="feedback">FEEDBACK</option>
+            <option value="survey">SURVEY</option>
+            <option value="competitor">COMPETITOR</option>
           </select>
 
           {hasActiveFilters && (
             <button
               onClick={onClearFilters}
-              className="px-3 py-2 rounded-xl text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 transition border border-rose-900/50 cursor-pointer whitespace-nowrap"
+              className="neo-btn bg-[#FF6B6B] text-black px-3.5 py-2 text-xs uppercase tracking-wider hover:bg-[#FF5252]"
             >
-              Clear Filters
+              <XCircle className="w-3.5 h-3.5 mr-1 stroke-[2.5]" />
+              <span>Clear</span>
             </button>
           )}
         </div>
       </div>
 
+      {/* Insights Cards Grid */}
       {insights.length === 0 ? (
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-12 text-center">
-          <Sparkles className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-          <h3 className="text-base font-semibold text-slate-200">No matching insights found</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+        <div className="neo-card p-12 text-center space-y-3">
+          <div className="w-16 h-16 rounded-2xl bg-[#FFE600] border-2 border-black flex items-center justify-center mx-auto shadow-[4px_4px_0px_0px_#000000]">
+            <Sparkles className="w-8 h-8 stroke-[2.5] text-black" />
+          </div>
+          <h3 className="text-lg font-black uppercase text-black">No matching insights found</h3>
+          <p className="text-xs font-bold text-neutral-600 max-w-sm mx-auto">
             {hasActiveFilters
-              ? "Try clearing filters to see all analyzed insights."
-              : "No documents have been analyzed yet. Go to Documents and click Analyze."}
+              ? "Try adjusting your theme search or sentiment filters."
+              : "Analyze pending documents to populate structured insights."}
           </p>
-          {hasActiveFilters && (
-            <button
-              onClick={onClearFilters}
-              className="mt-4 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition cursor-pointer"
-            >
-              Reset Filters
-            </button>
-          )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {insights.map((ins) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {insights.map((insight) => (
             <div
-              key={ins.id}
-              className="bg-slate-900/80 border border-slate-800/80 hover:border-slate-700/80 rounded-2xl p-5 shadow-lg flex flex-col justify-between transition group"
+              key={insight.id}
+              className="neo-card p-6 flex flex-col justify-between hover:shadow-[7px_7px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all bg-white"
             >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <SentimentBadge sentiment={ins.sentiment} />
-                  <div className="flex items-center space-x-2">
-                    <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
-                        ins.reviewStatus === "edited"
-                          ? "bg-purple-950/60 text-purple-300 border-purple-800"
-                          : "bg-slate-800 text-slate-400 border-slate-700"
-                      }`}
-                    >
-                      {ins.reviewStatus === "edited" ? "Human Edited" : "AI Draft"}
+              <div className="space-y-4">
+                {/* Card Header */}
+                <div className="flex items-center justify-between gap-2 pb-3 border-b-2 border-black">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <SentimentBadge sentiment={insight.sentiment} />
+                    <span className="neo-badge bg-[#C4B5FD] text-black text-[10px]">
+                      {insight.sourceType}
                     </span>
-                    <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">
-                      {ins.sourceType}
-                    </span>
+                    {insight.reviewStatus === "edited" && (
+                      <span className="neo-badge bg-[#55E6A5] text-black text-[10px]">
+                        Human Edited
+                      </span>
+                    )}
                   </div>
+                  <button
+                    onClick={() => setEditingInsight(insight)}
+                    className="neo-btn bg-[#FFE600] text-black px-3 py-1.5 text-[11px] uppercase tracking-wider hover:bg-[#FFD600]"
+                  >
+                    <Edit3 className="w-3 h-3 mr-1 stroke-[2.5]" />
+                    <span>Edit</span>
+                  </button>
                 </div>
 
-                <p className="text-xs text-slate-200 leading-relaxed font-medium mb-3">
-                  {ins.summary}
-                </p>
-
-                {ins.themes.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-3">
-                    {ins.themes.map((theme, i) => (
+                {/* Themes list */}
+                <div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {insight.themes.map((theme) => (
                       <span
-                        key={i}
-                        className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-indigo-950/60 text-indigo-300 border border-indigo-900/60"
+                        key={theme}
+                        onClick={() => setSelectedTheme(theme)}
+                        className="cursor-pointer neo-badge bg-[#FAF7F2] text-black text-[10px] hover:bg-[#FFE600] transition-colors"
                       >
-                        <Tag className="w-2.5 h-2.5 text-indigo-400" />
-                        <span>{theme}</span>
+                        #{theme}
                       </span>
                     ))}
                   </div>
-                )}
+                </div>
 
-                {ins.painPoints.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-slate-800/60">
-                    <h5 className="text-[11px] font-semibold text-rose-400 uppercase tracking-wider flex items-center gap-1 mb-1.5">
-                      <AlertTriangle className="w-3 h-3 text-rose-400" />
-                      <span>Pain Points</span>
-                    </h5>
+                {/* Executive Summary */}
+                <div className="p-3 bg-[#FAF7F2] border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_#000000]">
+                  <p className="text-xs font-semibold text-black leading-relaxed">
+                    {insight.summary}
+                  </p>
+                </div>
+
+                {/* Pain Points */}
+                {insight.painPoints.length > 0 && (
+                  <div className="p-3 bg-[#FFF0F0] border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_#000000] space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-xs font-black uppercase text-[#D90429] tracking-wider">
+                      <AlertTriangle className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Friction & Pain Points ({insight.painPoints.length})</span>
+                    </div>
                     <ul className="space-y-1">
-                      {ins.painPoints.map((p, i) => (
-                        <li key={i} className="text-xs text-slate-300 pl-2 border-l border-rose-800/60">
-                          {p}
+                      {insight.painPoints.map((point, i) => (
+                        <li key={i} className="text-xs font-semibold text-neutral-900 flex items-start gap-1.5 leading-snug">
+                          <span className="text-black font-black">•</span>
+                          <span>{point}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                {ins.featureRequests.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-slate-800/60">
-                    <h5 className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider flex items-center gap-1 mb-1.5">
-                      <Lightbulb className="w-3 h-3 text-amber-400" />
-                      <span>Feature Requests</span>
-                    </h5>
+                {/* Feature Requests */}
+                {insight.featureRequests.length > 0 && (
+                  <div className="p-3 bg-[#F0FFF4] border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_#000000] space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-xs font-black uppercase text-[#008000] tracking-wider">
+                      <Lightbulb className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Requested Capabilities ({insight.featureRequests.length})</span>
+                    </div>
                     <ul className="space-y-1">
-                      {ins.featureRequests.map((r, i) => (
-                        <li key={i} className="text-xs text-slate-300 pl-2 border-l border-amber-800/60">
-                          {r}
+                      {insight.featureRequests.map((req, i) => (
+                        <li key={i} className="text-xs font-semibold text-neutral-900 flex items-start gap-1.5 leading-snug">
+                          <span className="text-black font-black">•</span>
+                          <span>{req}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                {ins.competitorMentions.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-slate-800/60">
-                    <h5 className="text-[11px] font-semibold text-purple-400 uppercase tracking-wider flex items-center gap-1 mb-1.5">
-                      <Building2 className="w-3 h-3 text-purple-400" />
-                      <span>Competitors: {ins.competitorMentions.join(", ")}</span>
-                    </h5>
-                    {ins.competitor?.pricing && ins.competitor.pricing.length > 0 && (
-                      <p className="text-[11px] text-slate-400">
-                        Pricing: {ins.competitor.pricing.join("; ")}
-                      </p>
-                    )}
+                {/* Competitor Signals */}
+                {insight.competitorMentions && insight.competitorMentions.length > 0 && (
+                  <div className="p-3 bg-[#F0F9FF] border-2 border-black rounded-xl shadow-[2px_2px_0px_0px_#000000] space-y-1">
+                    <div className="flex items-center gap-1.5 text-xs font-black uppercase text-[#0284C7] tracking-wider">
+                      <Building2 className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Competitors Mentioned</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {insight.competitorMentions.map((c) => (
+                        <span key={c} className="neo-badge bg-white text-black text-[10px]">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
-              <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-                <span className="font-mono text-[10px]">Doc: {ins.documentId.slice(-6)}</span>
-                <button
-                  onClick={() => setEditingInsight(ins)}
-                  className="inline-flex items-center space-x-1 text-indigo-400 hover:text-indigo-300 font-medium transition cursor-pointer"
-                >
-                  <Edit3 className="w-3 h-3" />
-                  <span>Review / Edit</span>
-                </button>
+              {/* Card Footer */}
+              <div className="pt-4 mt-4 border-t-2 border-black flex items-center justify-between text-[11px] font-mono text-neutral-600">
+                <span>Model: {insight.model.split("/").pop()}</span>
+                <span>v{insight.promptVersion}</span>
               </div>
             </div>
           ))}

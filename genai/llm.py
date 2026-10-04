@@ -18,7 +18,7 @@ def is_llm_configured() -> bool:
     return bool(key and not key.startswith("nvapi-your-key") and key != "dummy")
 
 
-def get_llm(temperature: float = 0.0, timeout: int = 60) -> ChatOpenAI:
+def get_llm(temperature: float = 0.0, timeout: int = 120) -> ChatOpenAI:
     """Return configured ChatOpenAI client pointing to NVIDIA API Catalog."""
     api_key = os.getenv("NVIDIA_API_KEY", "").strip()
     base_url = os.getenv("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1").strip()
