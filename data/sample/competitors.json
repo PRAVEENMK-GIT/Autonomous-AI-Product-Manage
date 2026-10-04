@@ -1,0 +1,22 @@
+[
+  {
+    "text": "Competitor X just launched an AI Assistant that automates ticket creation directly from user feedback. They offer a $20/user plan with free trial. Strong UI navigation, but customer reviews complain about lack of export options.",
+    "sourceType": "competitor",
+    "externalRef": "comp-01"
+  },
+  {
+    "text": "Slack announced deeper workflow automation for incident management. Their pricing starts at $8.75/month. Huge ecosystem advantage and integrations, but small teams find the notification volume overwhelming.",
+    "sourceType": "competitor",
+    "externalRef": "comp-02"
+  },
+  {
+    "text": "Linear expanded customer insights module with direct feedback linking to GitHub issues. Pricing remains competitive at $10/user. High speed performance and keyboard shortcuts are major strengths, but no mobile support yet.",
+    "sourceType": "competitor",
+    "externalRef": "comp-03"
+  },
+  {
+    "text": "Competitor Y pivoted to enterprise-only pricing starting at $1500/month. Multiple reviews cite poor onboarding and complicated permission structures as major weaknesses.",
+    "sourceType": "competitor",
+    "externalRef": "comp-04"
+  }
+]

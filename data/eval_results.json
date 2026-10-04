@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-10-04T05:40:37.058892+00:00",
+  "model": "meta/llama-3.3-70b-instruct",
+  "promptVersion": "v1",
+  "totalItems": 15,
+  "sentimentAccuracy": 0.8,
+  "themePrecision": 0.8462,
+  "themeRecall": 1.0,
+  "themeF1": 0.9167,
+  "painPointCaptureRate": 0.8889,
+  "mismatches": [
+    {
+      "itemIndex": 5,
+      "textSnippet": "The dashboard layout is cluttered and difficult to navigate. The sidebar hides c...",
+      "expectedSentiment": "negative",
+      "predictedSentiment": "neutral",
+      "expectedThemes": [
+        "ui navigation"
+      ],
+      "predictedThemes": [
+        "ui navigation",
+        "reporting"
+      ],
+      "missedThemes": []
+    },
+    {
+      "itemIndex": 14,
+      "textSnippet": "Competitor X just launched an AI Assistant that automates ticket creation direct...",
+      "expectedSentiment": "mixed",
+      "predictedSentiment": "neutral",
+      "expectedThemes": [
+        "export options",
+        "ui navigation",
+        "pricing"
+      ],
+      "predictedThemes": [
+        "pricing",
+        "ui navigation",
+        "export options"
+      ],
+      "missedThemes": []
+    },
+    {
+      "itemIndex": 15,
+      "textSnippet": "Linear expanded customer insights module with direct feedback linking to GitHub ...",
+      "expectedSentiment": "positive",
+      "predictedSentiment": "neutral",
+      "expectedThemes": [
+        "mobile support",
+        "performance",
+        "pricing"
+      ],
+      "predictedThemes": [
+        "integrations",
+        "mobile support",
+        "performance",
+        "pricing"
+      ],
+      "missedThemes": []
+    }
+  ]
+}

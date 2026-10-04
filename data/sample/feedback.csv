@@ -1,0 +1,11 @@
+text,sourceType,externalRef
+"The search speed is terribly slow. Every time I type a query it freezes for 5-10 seconds before returning results.",feedback,fb-01
+"We really need an export option to CSV and PDF so we can share summaries with executive leadership.",feedback,fb-02
+"Your pricing is way too expensive for early-stage startups and small teams. Competitor X is half the price.",feedback,fb-03
+"Onboarding is confusing. I didn't know where to start or how to invite my engineering teammates.",feedback,fb-04
+"The dashboard layout is cluttered and difficult to navigate. The sidebar hides critical settings.",feedback,fb-05
+"Please add a direct integration with Slack and Jira so our team gets pinged on critical alerts.",feedback,fb-06
+"The mobile web view is completely broken. Buttons overlap and tables are unreadable on phones.",feedback,fb-07
+"Love the core concept and AI synthesis! It saves our PM team hours every week during sprint discovery.",feedback,fb-08
+"Search indexing crashes whenever we upload a dataset with more than 1000 items. Need bulk optimization.",feedback,fb-09
+"Customer support chats are difficult to track. Wish you had a live status dashboard for pending tickets.",feedback,fb-10

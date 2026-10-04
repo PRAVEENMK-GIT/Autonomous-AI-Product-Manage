@@ -1,0 +1,9 @@
+text,rating,sourceType,externalRef
+"Great tool overall, but search speed is noticeably sluggish when filtering large tables.",4,survey,surv-01
+"Terrible experience trying to sign up. Email verification took 30 minutes to arrive.",1,survey,surv-02
+"The automated research summary is phenomenal! Saved us 3 days of manual reading.",5,survey,surv-03
+"Decent product but pricing tier changes caught us off guard. Annual plans need better flexibility.",3,survey,surv-04
+"Very satisfied with reliability, but please prioritize Jira integration and webhook alerts.",4,survey,surv-05
+"Navigation is unintuitive. Takes 4 clicks just to find the theme breakdown.",2,survey,surv-06
+"Super helpful for our product team. Export options could be expanded to PowerPoint slides.",4,survey,surv-07
+"The app frequently freezes on export to PDF. Lost work twice this sprint.",1,survey,surv-08

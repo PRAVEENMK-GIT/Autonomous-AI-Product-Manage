@@ -1,0 +1,126 @@
+[
+  {
+    "id": "eval-01",
+    "text": "The search speed is terribly slow. Every time I type a query it freezes for 5-10 seconds before returning results.",
+    "sourceType": "feedback",
+    "expectedSentiment": "negative",
+    "expectedThemes": ["search speed", "performance"],
+    "expectedPainPoints": ["Every time I type a query it freezes for 5-10 seconds before returning results."]
+  },
+  {
+    "id": "eval-02",
+    "text": "We really need an export option to CSV and PDF so we can share summaries with executive leadership.",
+    "sourceType": "feedback",
+    "expectedSentiment": "neutral",
+    "expectedThemes": ["export options"],
+    "expectedPainPoints": []
+  },
+  {
+    "id": "eval-03",
+    "text": "Your pricing is way too expensive for early-stage startups and small teams. Competitor X is half the price.",
+    "sourceType": "feedback",
+    "expectedSentiment": "negative",
+    "expectedThemes": ["pricing"],
+    "expectedPainPoints": ["Your pricing is way too expensive for early-stage startups and small teams."]
+  },
+  {
+    "id": "eval-04",
+    "text": "Onboarding is confusing. I didn't know where to start or how to invite my engineering teammates.",
+    "sourceType": "feedback",
+    "expectedSentiment": "negative",
+    "expectedThemes": ["onboarding"],
+    "expectedPainPoints": ["Onboarding is confusing. I didn't know where to start or how to invite my engineering teammates."]
+  },
+  {
+    "id": "eval-05",
+    "text": "The dashboard layout is cluttered and difficult to navigate. The sidebar hides critical settings.",
+    "sourceType": "feedback",
+    "expectedSentiment": "negative",
+    "expectedThemes": ["ui navigation"],
+    "expectedPainPoints": ["The dashboard layout is cluttered and difficult to navigate. The sidebar hides critical settings."]
+  },
+  {
+    "id": "eval-06",
+    "text": "Please add a direct integration with Slack and Jira so our team gets pinged on critical alerts.",
+    "sourceType": "feedback",
+    "expectedSentiment": "neutral",
+    "expectedThemes": ["integrations"],
+    "expectedPainPoints": []
+  },
+  {
+    "id": "eval-07",
+    "text": "The mobile web view is completely broken. Buttons overlap and tables are unreadable on phones.",
+    "sourceType": "feedback",
+    "expectedSentiment": "negative",
+    "expectedThemes": ["mobile support"],
+    "expectedPainPoints": ["The mobile web view is completely broken. Buttons overlap and tables are unreadable on phones."]
+  },
+  {
+    "id": "eval-08",
+    "text": "Love the core concept and AI synthesis! It saves our PM team hours every week during sprint discovery.",
+    "sourceType": "feedback",
+    "expectedSentiment": "positive",
+    "expectedThemes": ["reporting"],
+    "expectedPainPoints": []
+  },
+  {
+    "id": "eval-09",
+    "text": "Search indexing crashes whenever we upload a dataset with more than 1000 items. Need bulk optimization.",
+    "sourceType": "feedback",
+    "expectedSentiment": "negative",
+    "expectedThemes": ["search speed", "performance"],
+    "expectedPainPoints": ["Search indexing crashes whenever we upload a dataset with more than 1000 items."]
+  },
+  {
+    "id": "eval-10",
+    "text": "Great tool overall, but search speed is noticeably sluggish when filtering large tables.",
+    "sourceType": "survey",
+    "rating": 4,
+    "expectedSentiment": "positive",
+    "expectedThemes": ["search speed"],
+    "expectedPainPoints": ["search speed is noticeably sluggish when filtering large tables"]
+  },
+  {
+    "id": "eval-11",
+    "text": "Terrible experience trying to sign up. Email verification took 30 minutes to arrive.",
+    "sourceType": "survey",
+    "rating": 1,
+    "expectedSentiment": "negative",
+    "expectedThemes": ["onboarding"],
+    "expectedPainPoints": ["Terrible experience trying to sign up. Email verification took 30 minutes to arrive."]
+  },
+  {
+    "id": "eval-12",
+    "text": "The automated research summary is phenomenal! Saved us 3 days of manual reading.",
+    "sourceType": "survey",
+    "rating": 5,
+    "expectedSentiment": "positive",
+    "expectedThemes": ["reporting"],
+    "expectedPainPoints": []
+  },
+  {
+    "id": "eval-13",
+    "text": "The app frequently freezes on export to PDF. Lost work twice this sprint.",
+    "sourceType": "survey",
+    "rating": 1,
+    "expectedSentiment": "negative",
+    "expectedThemes": ["export options", "performance"],
+    "expectedPainPoints": ["The app frequently freezes on export to PDF. Lost work twice this sprint."]
+  },
+  {
+    "id": "eval-14",
+    "text": "Competitor X just launched an AI Assistant that automates ticket creation directly from user feedback. They offer a $20/user plan with free trial. Strong UI navigation, but customer reviews complain about lack of export options.",
+    "sourceType": "competitor",
+    "expectedSentiment": "mixed",
+    "expectedThemes": ["pricing", "ui navigation", "export options"],
+    "expectedPainPoints": []
+  },
+  {
+    "id": "eval-15",
+    "text": "Linear expanded customer insights module with direct feedback linking to GitHub issues. Pricing remains competitive at $10/user. High speed performance and keyboard shortcuts are major strengths, but no mobile support yet.",
+    "sourceType": "competitor",
+    "expectedSentiment": "positive",
+    "expectedThemes": ["pricing", "performance", "mobile support"],
+    "expectedPainPoints": []
+  }
+]
