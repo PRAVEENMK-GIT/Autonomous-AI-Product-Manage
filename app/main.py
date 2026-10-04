@@ -97,3 +97,9 @@ app.include_router(documents_router)
 app.include_router(insights_router)
 app.include_router(themes_router)
 app.include_router(reports_router)
+
+# Mount static frontend build if present (enables all-in-one single-container deployments)
+frontend_dist = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+if os.path.exists(frontend_dist):
+    from fastapi.staticfiles import StaticFiles
+    app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="static")

@@ -9,8 +9,7 @@ import type {
   SourceType,
   ThemeStat,
 } from "../types";
-
-const API_BASE = "";
+const API_BASE = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
